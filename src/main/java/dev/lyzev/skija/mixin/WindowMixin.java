@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2024. Lyzev
+ * All rights reserved.
+ */
+
 package dev.lyzev.skija.mixin;
 
 import dev.lyzev.skija.client.SkijaClient;

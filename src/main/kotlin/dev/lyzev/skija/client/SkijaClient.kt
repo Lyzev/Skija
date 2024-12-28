@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2024. Lyzev
+ * All rights reserved.
+ */
+
 package dev.lyzev.skija.client
 
 import com.mojang.blaze3d.platform.GlStateManager

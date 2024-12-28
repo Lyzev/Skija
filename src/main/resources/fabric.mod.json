@@ -3,7 +3,7 @@
   "id": "skija",
   "version": "${version}",
   "name": "Skija",
-  "description": "Skija Example Minecraft Implementation",
+  "description": "Skija is an example Minecraft implementation that integrates the Skija graphics library to enhance rendering capabilities.",
   "authors": [],
   "contact": {},
   "license": "All-Rights-Reserved",
