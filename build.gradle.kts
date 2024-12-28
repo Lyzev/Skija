@@ -44,7 +44,7 @@ dependencies {
     // https://mvnrepository.com/artifact/io.github.humbleui/skija-windows-x64
     implementation("io.github.humbleui:skija-windows-x64:0.116.2")
 
-    implementation(fileTree("libs") { include("*.jar") })
+//    implementation(fileTree("libs") { include("*.jar") })
 }
 
 tasks.processResources {

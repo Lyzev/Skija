@@ -21,8 +21,7 @@ public class MinecraftClientMixin {
         SkijaClient.INSTANCE.initSkia();
     }
 
-    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gl/Framebuffer;draw(II)V", shift = At.Shift.AFTER))
-    private void render(CallbackInfo ci) {
-        SkijaClient.INSTANCE.draw();
-    }
+//    @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/Window;swapBuffers(Lnet/minecraft/client/util/tracy/TracyFrameCapturer;)V", shift = At.Shift.BEFORE))
+//    private void render(CallbackInfo ci) {
+//    }
 }

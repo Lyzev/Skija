@@ -6,7 +6,9 @@
   "mixins": [
   ],
   "client": [
+    "GameRendererMixin",
     "MinecraftClientMixin",
+    "RenderSystemMixin",
     "WindowMixin"
   ],
   "injectors": {
