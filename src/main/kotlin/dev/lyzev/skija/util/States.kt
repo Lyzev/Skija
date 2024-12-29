@@ -3,7 +3,7 @@
  * All rights reserved.
  */
 
-package dev.lyzev.skija.client.state
+package dev.lyzev.skija.util
 
 import java.util.*
 

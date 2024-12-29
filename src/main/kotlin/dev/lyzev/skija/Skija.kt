@@ -3,17 +3,17 @@
  * All rights reserved.
  */
 
-package dev.lyzev.skija.client
+package dev.lyzev.skija
 
 import com.mojang.blaze3d.systems.RenderSystem
-import dev.lyzev.skija.client.state.States
+import dev.lyzev.skija.util.States
 import io.github.humbleui.skija.*
 import io.github.humbleui.types.Rect
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.client.MinecraftClient
 
 
-object SkijaClient : ClientModInitializer {
+object Skija : ClientModInitializer {
 
     val mc = MinecraftClient.getInstance()
 
@@ -53,8 +53,6 @@ object SkijaClient : ClientModInitializer {
 
     fun draw() {
         States.push()
-
-        mc.textRenderer.draw()
 
         RenderSystem.clearColor(0f, 0f, 0f, 0f)
 

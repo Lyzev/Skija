@@ -13,7 +13,7 @@
     "client": [
       {
         "adapter": "kotlin",
-        "value": "dev.lyzev.skija.client.SkijaClient"
+        "value": "dev.lyzev.skija.Skija"
       }
     ]
   },

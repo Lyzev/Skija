@@ -5,7 +5,7 @@
 
 package dev.lyzev.skija.mixin;
 
-import dev.lyzev.skija.client.SkijaClient;
+import dev.lyzev.skija.Skija;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.RunArgs;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +18,7 @@ public class MinecraftClientMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void init(RunArgs args, CallbackInfo ci) {
-        SkijaClient.INSTANCE.initSkia();
+        Skija.INSTANCE.initSkia();
     }
 
 }
