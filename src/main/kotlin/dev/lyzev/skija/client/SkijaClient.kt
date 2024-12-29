@@ -6,13 +6,11 @@
 package dev.lyzev.skija.client
 
 import com.mojang.blaze3d.systems.RenderSystem
-import dev.lyzev.skija.client.state.UIState
+import dev.lyzev.skija.client.state.States
 import io.github.humbleui.skija.*
-import io.github.humbleui.skija.impl.Library
 import io.github.humbleui.types.Rect
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.render.Tessellator
 
 
 object SkijaClient : ClientModInitializer {
@@ -54,15 +52,19 @@ object SkijaClient : ClientModInitializer {
     }
 
     fun draw() {
-        UIState.backup()
+        States.push()
+
+        mc.textRenderer.draw()
+
         RenderSystem.clearColor(0f, 0f, 0f, 0f)
+
         context!!.resetGLAll()
 
         canvas!!.drawRect(Rect.makeXYWH(10f, 10f, 400f, 200f), Paint().setColor(0x90FF0000.toInt()))
         canvas!!.drawRectShadow(Rect.makeXYWH(10f, 10f, 400f, 200f), 5f, 5f, 10f, 0x90FFFFFF.toInt())
 
-        context!!.flush();
+        context!!.flush()
 
-        UIState.restore();
+        States.pop()
     }
 }

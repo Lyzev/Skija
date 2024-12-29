@@ -44,6 +44,11 @@ dependencies {
     // https://mvnrepository.com/artifact/io.github.humbleui/skija-windows-x64
     implementation("io.github.humbleui:skija-windows-x64:0.116.2")
 
+    implementation("io.github.spair:imgui-java-binding:1.88.0")
+    implementation("io.github.spair:imgui-java-lwjgl3:1.88.0")
+
+    implementation("io.github.spair:imgui-java-natives-windows:1.88.0")
+
 //    implementation(fileTree("libs") { include("*.jar") })
 }
 
