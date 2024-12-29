@@ -1,5 +1,7 @@
 # Skija
 
+**DISCLAIMER: THIS PROJECT IS CURRENTLY IN DEVELOPMENT AND IS NOT YET FUNCTIONAL.**
+
 Skija is an example Minecraft implementation using the Skija graphics library. This project demonstrates how to
 integrate Skija with Minecraft to enhance rendering capabilities.
 
