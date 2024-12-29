@@ -40,6 +40,20 @@ class State {
         if (VERSION >= 310) {
             props.lastEnablePrimitiveRestart = glIsEnabled(GL_PRIMITIVE_RESTART)
         }
+
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, props.lastFramebuffer)
+        glGetIntegerv(GL_DRAW_BUFFER, props.lastDrawBuffer)
+        glGetIntegerv(GL_READ_BUFFER, props.lastReadBuffer)
+        glGetIntegerv(GL_DEPTH_FUNC, props.lastDepthFunc)
+        glGetIntegerv(GL_STENCIL_FUNC, props.lastStencilFunc)
+        glGetIntegerv(GL_STENCIL_FAIL, props.lastStencilFail)
+        glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, props.lastStencilPassDepthFail)
+        glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, props.lastStencilPassDepthPass)
+
+        props.lastDepthMask = glGetBoolean(GL_DEPTH_WRITEMASK)
+        glGetIntegerv(GL_STENCIL_WRITEMASK, props.lastStencilMask)
+        glGetIntegerv(GL_CULL_FACE_MODE, props.lastCullFaceMode)
+        glGetIntegerv(GL_FRONT_FACE, props.lastFrontFace)
     }
 
     fun pop() {
@@ -75,6 +89,18 @@ class State {
         }
         glViewport(props.lastViewport[0], props.lastViewport[1], props.lastViewport[2], props.lastViewport[3])
         glScissor(props.lastScissorBox[0], props.lastScissorBox[1], props.lastScissorBox[2], props.lastScissorBox[3])
+
+        glBindFramebuffer(GL_FRAMEBUFFER, props.lastFramebuffer[0])
+        glDrawBuffer(props.lastDrawBuffer[0])
+        glReadBuffer(props.lastReadBuffer[0])
+        glDepthFunc(props.lastDepthFunc[0])
+        glStencilFunc(props.lastStencilFunc[0], 0, 0xFF)
+        glStencilOp(props.lastStencilFail[0], props.lastStencilPassDepthFail[0], props.lastStencilPassDepthPass[0])
+
+        glDepthMask(props.lastDepthMask)
+        glStencilMask(props.lastStencilMask[0])
+        glCullFace(props.lastCullFaceMode[0])
+        glFrontFace(props.lastFrontFace[0])
     }
 
     companion object {

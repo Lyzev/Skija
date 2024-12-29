@@ -27,4 +27,18 @@ class Properties {
     var lastEnableStencilTest = false
     var lastEnableScissorTest = false
     var lastEnablePrimitiveRestart = false
+
+    val lastFramebuffer = IntArray(1)
+    val lastDrawBuffer = IntArray(1)
+    val lastReadBuffer = IntArray(1)
+    val lastDepthFunc = IntArray(1)
+    val lastStencilFunc = IntArray(1)
+    val lastStencilFail = IntArray(1)
+    val lastStencilPassDepthFail = IntArray(1)
+    val lastStencilPassDepthPass = IntArray(1)
+
+    var lastDepthMask = false
+    val lastStencilMask = IntArray(1)
+    val lastCullFaceMode = IntArray(1)
+    val lastFrontFace = IntArray(1)
 }
