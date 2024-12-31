@@ -32,6 +32,8 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 
     implementation("io.github.humbleui:skija-windows-x64:${project.property("skija_version")}")
+
+    implementation(fileTree("libs") { include("*.jar") })
 }
 
 tasks.processResources {

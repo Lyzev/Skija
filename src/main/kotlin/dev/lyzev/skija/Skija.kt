@@ -6,11 +6,16 @@
 package dev.lyzev.skija
 
 import com.mojang.blaze3d.systems.RenderSystem
+import dev.lyzev.skija.util.SkijaHelper
 import dev.lyzev.skija.util.States
 import io.github.humbleui.skija.*
 import io.github.humbleui.types.Rect
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.gl.SimpleFramebuffer
+import net.minecraft.client.render.WorldBorderRendering
+import net.minecraft.world.border.WorldBorder
+import org.lwjgl.opengl.GL11
 
 
 object Skija : ClientModInitializer {
@@ -58,10 +63,23 @@ object Skija : ClientModInitializer {
 
         context!!.resetGLAll()
 
-        canvas!!.drawRect(Rect.makeXYWH(10f, 10f, 400f, 200f), Paint().setColor(0x90FF0000.toInt()))
-        canvas!!.drawRectShadow(Rect.makeXYWH(10f, 10f, 400f, 200f), 5f, 5f, 10f, 0x90FFFFFF.toInt())
+        val textureImage = SkijaHelper.getOrPut(context!!, mc.framebuffer.colorAttachment, mc.framebuffer.textureWidth, mc.framebuffer.textureHeight, alpha = false)
 
-        context!!.flush()
+        val paint = Paint().apply {
+            imageFilter = ImageFilter.makeBlur(20f, 20f, FilterTileMode.CLAMP)
+        }
+
+        val rect = Rect.makeXYWH(10f, 10f, 400f, 200f)
+        canvas!!.save()
+        canvas!!.clipRect(rect, ClipMode.INTERSECT)
+        canvas!!.drawImage(textureImage, 0f ,0f, paint)
+        canvas!!.restore()
+
+//        canvas!!.drawRect(rect, Paint().setColor(0x30FFFFFF.toInt()))
+//        canvas!!.drawRectShadow(rect, 5f, 5f, 10f, 0x90FFFFFF.toInt())
+
+        surface!!.flushAndSubmit()
+//        context!!.flush()
 
         States.pop()
     }

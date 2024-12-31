@@ -5,10 +5,17 @@
 
 package dev.lyzev.skija.util
 
+import org.lwjgl.opengl.GL30
+
+
 class Properties {
+    val pixelStores = HashMap<PixelStore, Int>()
+
     val lastActiveTexture = IntArray(1)
+
+    val lastTextures = IntArray(32) { -1 }
+
     val lastProgram = IntArray(1)
-    val lastTexture = IntArray(1)
     val lastSampler = IntArray(1)
     val lastArrayBuffer = IntArray(1)
     val lastVertexArrayObject = IntArray(1)
@@ -41,4 +48,20 @@ class Properties {
     val lastStencilMask = IntArray(1)
     val lastCullFaceMode = IntArray(1)
     val lastFrontFace = IntArray(1)
+
+    val lastDepthRange = DoubleArray(2)
+    val lastLineWidth = FloatArray(1)
+    val lastPointSize = FloatArray(1)
+    val lastPolygonOffsetFactor = FloatArray(1)
+    val lastPolygonOffsetUnits = FloatArray(1)
+
+    var lastColorWriteMask = IntArray(4)
+    var lastEnableDepthClamp = false
+    var lastEnableSampleCoverage = false
+    var lastEnableSampleAlphaToCoverage = false
+
+    var lastEnableMultisample = false
+    var lastEnableSampleMask = false
+    var lastEnableTextureCubeMapSeamless = false
+    var lastEnableFramebufferSRGB = false
 }

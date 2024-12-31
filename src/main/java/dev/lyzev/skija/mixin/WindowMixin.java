@@ -15,8 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Window.class)
 public class WindowMixin {
 
-    @Inject(method = "onWindowSizeChanged", at = @At("TAIL"))
-    private void onWindowSizeChanged(long window, int width, int height, CallbackInfo ci) {
+    @Inject(method = "onFramebufferSizeChanged", at = @At("RETURN"))
+    private void onFramebufferSizeChanged(long window, int width, int height, CallbackInfo ci) {
         Skija.INSTANCE.initSkia();
     }
 }
