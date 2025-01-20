@@ -57,6 +57,15 @@ object Skija : ClientModInitializer {
     }
 
     fun draw() {
+        val states = mutableMapOf<Int, Pair<Int, Int>>()
+        for (i in States.textures) {
+            // check if texture is existing/valid
+            if (i == 0 || !GL11.glIsTexture(i)) continue
+
+            // save state if clamped, repeat, or mirrored
+            RenderSystem.bindTexture(i)
+            states[i] = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S) to GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T)
+        }
         States.push()
 
         RenderSystem.clearColor(0f, 0f, 0f, 0f)
@@ -80,6 +89,18 @@ object Skija : ClientModInitializer {
 
         surface!!.flushAndSubmit()
 //        context!!.flush()
+
+        // print if states changed
+        states.forEach {
+            // check if texture is existing/valid
+            if (it.key == 0 || !GL11.glIsTexture(it.key)) return@forEach
+            RenderSystem.bindTexture(it.key)
+            val wrapS = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S)
+            val wrapT = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T)
+            if (wrapS != it.value.first || wrapT != it.value.second) {
+                println("Texture $it.key changed from (${it.value.first}, ${it.value.second}) to ($wrapS, $wrapT)")
+            }
+        }
 
         States.pop()
     }

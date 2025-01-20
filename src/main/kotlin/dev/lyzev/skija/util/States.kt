@@ -9,6 +9,7 @@ import java.util.*
 
 object States {
 
+    val textures = Stack<Int>()
 
     private val states = Stack<State>()
 
