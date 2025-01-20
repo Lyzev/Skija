@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "2.1.0"
     id("fabric-loom") version "1.9-SNAPSHOT"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 version = project.property("mod_version") as String
@@ -19,7 +20,6 @@ java {
     withSourcesJar()
 }
 
-
 repositories {
 }
 
@@ -28,11 +28,8 @@ dependencies {
     mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
-
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
-
     implementation("io.github.humbleui:skija-windows-x64:${project.property("skija_version")}")
-
     implementation(fileTree("libs") { include("*.jar") })
 }
 
@@ -65,4 +62,16 @@ tasks.jar {
     from("LICENSE") {
         rename { "${it}_${project.base.archivesName}" }
     }
+}
+
+tasks.shadowJar {
+    configurations = listOf(project.configurations.runtimeClasspath.get())
+    dependencies {
+        include(dependency("io.github.humbleui:skija-windows-x64:${project.property("skija_version")}"))
+    }
+    from(fileTree("libs") { include("*.jar") })
+}
+
+tasks.build {
+    dependsOn(tasks.shadowJar)
 }
