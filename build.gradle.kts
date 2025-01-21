@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.api.tasks.Exec
+import org.gradle.internal.jvm.Jvm
 
 plugins {
     kotlin("jvm") version "2.1.0"
@@ -74,4 +76,29 @@ tasks.shadowJar {
 
 tasks.build {
     dependsOn(tasks.shadowJar)
+}
+
+tasks.register<Exec>("runClient + RenderDoc") {
+    val javaHome = Jvm.current().javaHome
+
+    commandLine = listOf(
+        "C:\\Program Files\\RenderDoc\\renderdoccmd.exe",
+        "capture",
+        "--opt-api-validation", // Remove if you don't want api validation
+        "--opt-api-validation-unmute", // Remove if you don't want api validation
+        "--opt-hook-children",
+        "--wait-for-exit",
+        "--working-dir",
+        ".",
+        "$javaHome\\bin\\java.exe",
+        "-Xmx64m",
+        "-Xms64m",
+        //"-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005", // Uncomment for remote debug
+        "-Dorg.gradle.appname=gradlew",
+        "-Dorg.gradle.java.home=$javaHome",
+        "-classpath",
+        "gradle\\wrapper\\gradle-wrapper.jar",
+        "org.gradle.wrapper.GradleWrapperMain",
+        "runClient",
+    )
 }

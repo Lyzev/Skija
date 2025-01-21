@@ -58,6 +58,7 @@ object Skija : ClientModInitializer {
     }
 
     fun draw() {
+        return
 //        val states = mutableMapOf<Int, Pair<Int, Int>>()
 //        for (i in States.textures) {
 //            // check if texture is existing/valid
@@ -92,14 +93,14 @@ object Skija : ClientModInitializer {
 //        context!!.flush()
 
         // print if states changed
-        States.textures.forEach {
-            // check if texture is existing/valid
-            if (it != 0 && GL11.glIsTexture(it)) {
-                RenderSystem.bindTexture(it)
-                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GlConst.GL_REPEAT)
-                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GlConst.GL_REPEAT)
-            }
-        }
+//        States.textures.forEach {
+//            // check if texture is existing/valid
+//            if (it != 0 && GL11.glIsTexture(it)) {
+//                RenderSystem.bindTexture(it)
+//                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GlConst.GL_REPEAT)
+//                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GlConst.GL_REPEAT)
+//            }
+//        }
 
         States.pop()
     }
