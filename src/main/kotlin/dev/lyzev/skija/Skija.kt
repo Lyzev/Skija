@@ -13,10 +13,8 @@ import io.github.humbleui.skija.*
 import io.github.humbleui.types.Rect
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gl.SimpleFramebuffer
-import net.minecraft.client.render.WorldBorderRendering
-import net.minecraft.world.border.WorldBorder
 import org.lwjgl.opengl.GL11
+import org.lwjgl.opengl.GL33C
 
 
 object Skija : ClientModInitializer {
@@ -58,15 +56,6 @@ object Skija : ClientModInitializer {
     }
 
     fun draw() {
-//        val states = mutableMapOf<Int, Pair<Int, Int>>()
-//        for (i in States.textures) {
-//            // check if texture is existing/valid
-//            if (i == 0 || !GL11.glIsTexture(i)) continue
-//
-//            // save state if clamped, repeat, or mirrored
-//            RenderSystem.bindTexture(i)
-//            states[i] = GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S) to GL11.glGetTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T)
-//        }
         States.push()
 
         RenderSystem.clearColor(0f, 0f, 0f, 0f)

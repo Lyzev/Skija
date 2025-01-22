@@ -19,15 +19,13 @@ class State {
         for (i in GL_TEXTURE0..GL_TEXTURE31) {
             glActiveTexture(i)
             props.lastTextures[i - GL_TEXTURE0] = glGetInteger(GL_TEXTURE_BINDING_2D)
+            if (VERSION >= 330) {
+                props.lastSamplers[i - GL_TEXTURE0] = glGetInteger(GL_SAMPLER_BINDING)
+            }
         }
 
         // Save the currently active shader program
         glGetIntegerv(GL_CURRENT_PROGRAM, props.lastProgram)
-
-        // Save sampler state for newer OpenGL versions
-        if (VERSION >= 330) {
-            glGetIntegerv(GL_SAMPLER_BINDING, props.lastSampler)
-        }
 
         // Save buffer and vertex array bindings
         glGetIntegerv(GL_ARRAY_BUFFER_BINDING, props.lastArrayBuffer)
@@ -148,9 +146,6 @@ class State {
     fun pop() {
         // Restore the shader program
         glUseProgram(props.lastProgram[0])
-        if (VERSION >= 330) {
-            glBindSampler(0, props.lastSampler[0])
-        }
 
         // Restore textures from GL_TEXTURE0 to GL_TEXTURE31
         restoreTextures()
@@ -214,6 +209,9 @@ class State {
         for (i in GL_TEXTURE0..GL_TEXTURE31) {
             glActiveTexture(i)
             glBindTexture(GL_TEXTURE_2D, props.lastTextures[i - GL_TEXTURE0])
+            if (VERSION >= 330) {
+                glBindSampler(i - GL_TEXTURE0, props.lastSamplers[i - GL_TEXTURE0])
+            }
         }
     }
 

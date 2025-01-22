@@ -16,7 +16,6 @@ class Properties {
     val lastTextures = IntArray(32) { -1 }
 
     val lastProgram = IntArray(1)
-    val lastSampler = IntArray(1)
     val lastArrayBuffer = IntArray(1)
     val lastVertexArrayObject = IntArray(1)
     val lastPolygonMode = IntArray(2)
@@ -64,4 +63,6 @@ class Properties {
     var lastEnableSampleMask = false
     var lastEnableTextureCubeMapSeamless = false
     var lastEnableFramebufferSRGB = false
+
+    val lastSamplers = IntArray(32) { -1 }
 }
