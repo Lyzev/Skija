@@ -5,7 +5,6 @@
 
 package dev.lyzev.skija
 
-import com.mojang.blaze3d.platform.GlConst
 import com.mojang.blaze3d.systems.RenderSystem
 import dev.lyzev.skija.util.SkijaHelper
 import dev.lyzev.skija.util.States
@@ -13,8 +12,6 @@ import io.github.humbleui.skija.*
 import io.github.humbleui.types.Rect
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.client.MinecraftClient
-import org.lwjgl.opengl.GL11
-import org.lwjgl.opengl.GL33C
 
 
 object Skija : ClientModInitializer {
@@ -79,16 +76,6 @@ object Skija : ClientModInitializer {
 
         surface!!.flushAndSubmit()
 //        context!!.flush()
-
-        // print if states changed
-        States.textures.forEach {
-            // check if texture is existing/valid
-            if (it != 0 && GL11.glIsTexture(it)) {
-                RenderSystem.bindTexture(it)
-                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GlConst.GL_REPEAT)
-                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GlConst.GL_REPEAT)
-            }
-        }
 
         States.pop()
     }
