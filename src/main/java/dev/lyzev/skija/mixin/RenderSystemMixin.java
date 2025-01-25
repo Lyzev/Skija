@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(RenderSystem.class)
 public class RenderSystemMixin {
 
-    @Inject(method = "flipFrame", at = @At(value = "INVOKE", target = "Lorg/lwjgl/glfw/GLFW;glfwSwapBuffers(J)V", shift = At.Shift.BEFORE), remap = false)
+    @Inject(method = "flipFrame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Tessellator;clear()V", shift = At.Shift.AFTER))
     private static void flipFrame(long window, TracyFrameCapturer capturer, CallbackInfo ci) {
         Skija.INSTANCE.draw();
     }

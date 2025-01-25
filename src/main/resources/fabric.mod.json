@@ -9,21 +9,11 @@
   "license": "All-Rights-Reserved",
   "icon": "assets/skija/icon.png",
   "environment": "client",
-  "entrypoints": {
-    "client": [
-      {
-        "adapter": "kotlin",
-        "value": "dev.lyzev.skija.Skija"
-      }
-    ]
-  },
   "mixins": [
     "skija.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric-language-kotlin": ">=${kotlin_loader_version}",
-    "fabric": "*",
     "minecraft": "${minecraft_version}"
   }
 }

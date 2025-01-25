@@ -6,8 +6,8 @@
 package dev.lyzev.skija
 
 import com.mojang.blaze3d.systems.RenderSystem
-import dev.lyzev.skija.util.SkijaHelper
-import dev.lyzev.skija.util.States
+import dev.lyzev.skija.util.skija.ImageHelper
+import dev.lyzev.skija.util.gl.state.States
 import io.github.humbleui.skija.*
 import io.github.humbleui.types.Rect
 import net.fabricmc.api.ClientModInitializer
@@ -59,23 +59,25 @@ object Skija : ClientModInitializer {
 
         context!!.resetGLAll()
 
-        val textureImage = SkijaHelper.getOrPut(context!!, mc.framebuffer.colorAttachment, mc.framebuffer.textureWidth, mc.framebuffer.textureHeight, alpha = false)
+        val textureImage = ImageHelper.getMinecraftAsImage(
+            context!!,
+            mc.framebuffer.colorAttachment,
+            mc.framebuffer.textureWidth,
+            mc.framebuffer.textureHeight,
+            alpha = false
+        )
 
         val paint = Paint().apply {
-            imageFilter = ImageFilter.makeBlur(20f, 20f, FilterTileMode.CLAMP)
+            imageFilter = ImageFilter.makeBlur(20f, 20f, FilterTileMode.REPEAT)
         }
 
-        val rect = Rect.makeXYWH(10f, 10f, 400f, 200f)
+        val rect = Rect.makeXYWH(20f, 20f, 400f, 200f)
         canvas!!.save()
         canvas!!.clipRect(rect, ClipMode.INTERSECT)
-        canvas!!.drawImage(textureImage, 0f ,0f, paint)
+        canvas!!.drawImage(textureImage, 0f, 0f, paint)
         canvas!!.restore()
 
-//        canvas!!.drawRect(rect, Paint().setColor(0x30FFFFFF.toInt()))
-//        canvas!!.drawRectShadow(rect, 5f, 5f, 10f, 0x90FFFFFF.toInt())
-
         surface!!.flushAndSubmit()
-//        context!!.flush()
 
         States.pop()
     }
