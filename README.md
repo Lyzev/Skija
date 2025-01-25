@@ -9,4 +9,5 @@ This project is a proof of concept and is not intended for production use.
 
 ## License
 
-All rights reserved.
+This project is licensed under the AGPL-3.0 License. See the [LICENSE](LICENSE) file for details.
+Some parts of this project are inspired by the [imgui-java](https://github.com/SpaiR/imgui-java) project, which is licensed under the MIT License.
