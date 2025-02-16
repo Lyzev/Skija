@@ -24,8 +24,6 @@ To run the project, use the following Gradle tasks:
 
 This project is licensed under the AGPL-3.0 License. See the [LICENSE](LICENSE) file for details. 
 
-Some parts of this project are inspired by the [imgui-java](https://github.com/SpaiR/imgui-java) project.
-
 ## Acknowledgements
 
 - [imgui-java](https://github.com/SpaiR/imgui-java) for inspiration and code references.
