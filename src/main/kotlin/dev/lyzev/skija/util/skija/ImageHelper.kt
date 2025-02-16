@@ -19,20 +19,24 @@
 package dev.lyzev.skija.util.skija
 
 import com.mojang.blaze3d.systems.RenderSystem
+import dev.lyzev.skija.Skija
 import io.github.humbleui.skija.ColorType
 import io.github.humbleui.skija.DirectContext
 import io.github.humbleui.skija.Image
 import io.github.humbleui.skija.SurfaceOrigin
-import net.minecraft.client.MinecraftClient
 import org.lwjgl.opengl.GL11
 
 object ImageHelper {
 
-    private val mc = MinecraftClient.getInstance()
-
+    /**
+     * The textures that have been loaded.
+     */
     private val textures = mutableMapOf<Int, Image>()
 
-    fun getMinecraftAsImage(
+    /**
+     * Gets the Minecraft scene as a Skija image.
+     */
+    fun getMinecraftSceneAsSkijaImage(
         context: DirectContext,
         tex: Int,
         width: Int,
@@ -42,9 +46,9 @@ object ImageHelper {
     ): Image {
         RenderSystem.bindTexture(tex)
         val img = textures.getOrPut(tex) {
-            Image.adoptTextureFrom(
+            Image.adoptGLTextureFrom(
                 context,
-                mc.framebuffer.colorAttachment,
+                Skija.mc.framebuffer.colorAttachment,
                 GL11.GL_TEXTURE_2D,
                 width,
                 height,
@@ -55,9 +59,9 @@ object ImageHelper {
             )
         }
         if (img.width != width || img.height != height) {
-            textures[tex] = Image.adoptTextureFrom(
+            textures[tex] = Image.adoptGLTextureFrom(
                 context,
-                mc.framebuffer.colorAttachment,
+                Skija.mc.framebuffer.colorAttachment,
                 GL11.GL_TEXTURE_2D,
                 width,
                 height,

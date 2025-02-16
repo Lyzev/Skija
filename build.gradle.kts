@@ -30,8 +30,9 @@ dependencies {
     mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
 
+    implementation("io.github.humbleui:skija-shared:${project.property("skija_version")}")
     implementation("io.github.humbleui:skija-windows-x64:${project.property("skija_version")}")
-    implementation(fileTree("libs") { include("*.jar") })
+    implementation("io.github.humbleui:skija-linux-x64:${project.property("skija_version")}")
 }
 
 tasks.processResources {
@@ -44,8 +45,7 @@ tasks.processResources {
         expand(
             "version" to project.version,
             "minecraft_version" to project.property("minecraft_version"),
-            "loader_version" to project.property("loader_version"),
-            "kotlin_loader_version" to project.property("kotlin_loader_version")
+            "loader_version" to project.property("loader_version")
         )
     }
 }

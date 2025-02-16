@@ -21,8 +21,14 @@ package dev.lyzev.skija.util.gl.state
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL45.*
 
+/**
+ * Represents the OpenGL state.
+ */
 class State(private val glVersion: Int) {
 
+    /**
+     * The properties of the OpenGL state.
+     */
     private val props = Properties()
 
     /**

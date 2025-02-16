@@ -29,9 +29,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
 
+    /**
+     * Injects the initialization of Skija into the constructor of MinecraftClient.
+     * This is done to ensure that Skija is initialized after the game has been fully loaded.
+     */
     @Inject(method = "<init>", at = @At("TAIL"))
     private void init(RunArgs args, CallbackInfo ci) {
         Skija.INSTANCE.initSkia();
     }
-
 }

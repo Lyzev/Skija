@@ -26,16 +26,28 @@ import java.util.*
  */
 object States {
 
+    /**
+     * The current OpenGL version.
+     */
     private val glVersion: Int;
 
+    /**
+     * The stack of OpenGL states.
+     */
     private val states = Stack<State>()
 
+    /**
+     * Pushes the current OpenGL state onto the stack.
+     */
     fun push() {
         val currentState = State(glVersion)
         currentState.push()
         states += currentState
     }
 
+    /**
+     * Pops the last OpenGL state from the stack and restores it.
+     */
     fun pop() {
         if (states.isEmpty()) {
             throw IllegalStateException("No state to restore.")

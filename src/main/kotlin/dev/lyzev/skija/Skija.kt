@@ -23,32 +23,39 @@ import dev.lyzev.skija.util.gl.state.States
 import dev.lyzev.skija.util.skija.ImageHelper
 import io.github.humbleui.skija.*
 import io.github.humbleui.types.Rect
-import net.fabricmc.api.ClientModInitializer
 import net.minecraft.client.MinecraftClient
 
+/**
+ * This is an example Minecraft implementation that integrates the Skija graphics library to enhance rendering capabilities.
+ */
+object Skija {
 
-object Skija : ClientModInitializer {
+    /**
+     * The Minecraft client instance.
+     */
+    val mc: MinecraftClient = MinecraftClient.getInstance()
 
-    val mc = MinecraftClient.getInstance()
+    // --- Skia-related fields ---
+    private var context: DirectContext? = null
+    private var renderTarget: BackendRenderTarget? = null
+    private var surface: Surface? = null
+    private var canvas: Canvas? = null
+    private var dpi = 1f
 
-    override fun onInitializeClient() {
-        // This code runs as soon as Minecraft is in a mod-load-ready state.
-    }
-
-    var context: DirectContext? = null
-    var renderTarget: BackendRenderTarget? = null
-    var surface: Surface? = null
-    var canvas: Canvas? = null
-    var dpi = 1f
-
+    /**
+     * Initializes Skia.
+     */
     fun initSkia() {
+        // create context if it doesn't exist
         if (context == null) {
             context = DirectContext.makeGL()
         }
 
+        // close the previous surface and render target if
         surface?.close()
         renderTarget?.close()
 
+        // create a new render target and surface
         renderTarget = BackendRenderTarget.makeGL(
             (mc.window.framebufferWidth * dpi).toInt(),
             (mc.window.framebufferHeight * dpi).toInt(),
@@ -57,22 +64,27 @@ object Skija : ClientModInitializer {
             0,
             FramebufferFormat.GR_GL_RGBA8
         )
-
         surface = Surface.wrapBackendRenderTarget(
             context!!, renderTarget!!, SurfaceOrigin.BOTTOM_LEFT, SurfaceColorFormat.RGBA_8888, ColorSpace.getSRGB()
         )
 
+        // set the canvas
         canvas = surface!!.canvas
     }
 
+    /**
+     * Draws the Skia scene.
+     */
     fun draw() {
-        States.push()
+        States.push() // save the OpenGL state to ensure that Skia doesn't mess up the rendering
 
-        RenderSystem.clearColor(0f, 0f, 0f, 0f)
+        RenderSystem.clearColor(0f, 0f, 0f, 0f) // clear the color buffer
 
-        context!!.resetGLAll()
+        context!!.resetGLAll() // reset the OpenGL state to ensure the Minecraft gl state doesn't mess up the rendering
 
-        val textureImage = ImageHelper.getMinecraftAsImage(
+        // as an example, we'll draw a blurred version of the Minecraft scene in the top left corner
+
+        val textureImage = ImageHelper.getMinecraftSceneAsSkijaImage(
             context!!,
             mc.framebuffer.colorAttachment,
             mc.framebuffer.textureWidth,
@@ -90,8 +102,8 @@ object Skija : ClientModInitializer {
         canvas!!.drawImage(textureImage, 0f, 0f, paint)
         canvas!!.restore()
 
-        surface!!.flushAndSubmit()
+        surface!!.flushAndSubmit() // submit the surface to the GPU
 
-        States.pop()
+        States.pop() // restore the OpenGL state to ensure that Minecraft renders properly
     }
 }

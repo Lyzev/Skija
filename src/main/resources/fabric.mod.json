@@ -3,12 +3,16 @@
   "id": "skija",
   "version": "${version}",
   "name": "Skija",
-  "description": "Skija is an example Minecraft implementation that integrates the Skija graphics library to enhance rendering capabilities.",
-  "authors": [],
-  "contact": {},
-  "license": "All-Rights-Reserved",
-  "icon": "assets/skija/icon.png",
-  "environment": "client",
+  "description": "This is an example Minecraft implementation that integrates the Skija graphics library to enhance rendering capabilities.",
+  "authors": [
+    "Lyzev"
+  ],
+  "contact": {
+    "homepage": "https://lyzev.dev/",
+    "issues": "https://github.com/Lyzev/Skija/issues",
+    "sources": "https://github.com/Lyzev/Skija"
+  },
+  "license": "AGPL-3.0",
   "mixins": [
     "skija.mixins.json"
   ],

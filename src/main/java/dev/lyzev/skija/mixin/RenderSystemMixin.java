@@ -29,6 +29,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(RenderSystem.class)
 public class RenderSystemMixin {
 
+    /**
+     * Injects the drawing of Skija into the flipFrame method of RenderSystem.
+     * This is done to ensure that Skija is drawn after the game has been fully rendered.
+     */
     @Inject(method = "flipFrame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/Tessellator;clear()V", shift = At.Shift.AFTER))
     private static void flipFrame(long window, TracyFrameCapturer capturer, CallbackInfo ci) {
         Skija.INSTANCE.draw();
