@@ -18,7 +18,7 @@ In this example, we render the blurred version of the Minecraft scene using Skij
 To run the project, use the following Gradle tasks:
 
 - **Run Client:** `./gradlew runClient`
-- **Run Client with RenderDoc:** `./gradlew runClient + RenderDoc`
+- **Run Client with RenderDoc:** `gradlew.bat "runClient + RenderDoc"` (requires Windows and RenderDoc installed in the default location `C:\Program Files\RenderDoc\renderdoccmd.exe`)
 
 ## License
 
