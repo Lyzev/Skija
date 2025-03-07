@@ -28,4 +28,4 @@ This project is licensed under the AGPL-3.0 License. See the [LICENSE](LICENSE) 
 
 - [imgui-java](https://github.com/SpaiR/imgui-java) for inspiration and code references.
 - [Skija](https://github.com/HumbleUI/Skija) for providing the bindings to the Skia graphics library.
-- [EldoBug](https://github.com/EldoDebug) for adding bindings to Skija to allow using GL Textures as Skija images.
+- [EldoDebug](https://github.com/EldoDebug) for adding bindings to Skija to allow using GL Textures as Skija images.
