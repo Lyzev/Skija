@@ -30,4 +30,4 @@ Note that this project includes OpenSans font file, which is licensed under [SIL
 
 - [imgui-java](https://github.com/SpaiR/imgui-java) for inspiration and code references.
 - [Skija](https://github.com/HumbleUI/Skija) for providing the bindings to the Skia graphics library.
-- [EldoBug](https://github.com/EldoDebug) for adding bindings to Skija to allow using GL Textures as Skija images.
+- [EldoDebug](https://github.com/EldoDebug) for adding bindings to Skija to allow using GL Textures as Skija images.
