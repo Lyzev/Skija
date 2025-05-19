@@ -1,11 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "dev.lyzev.skija.mixin",
+  "package": "dev.lyzev.skia.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
+    "GameRendererMixin",
     "MinecraftClientMixin",
-    "RenderSystemMixin",
     "WindowMixin"
   ],
   "injectors": {

@@ -33,6 +33,9 @@ dependencies {
     implementation("io.github.humbleui:skija-shared:${project.property("skija_version")}")
     implementation("io.github.humbleui:skija-windows-x64:${project.property("skija_version")}")
     implementation("io.github.humbleui:skija-linux-x64:${project.property("skija_version")}")
+
+    implementation("dev.lyzev.api:piko:1.1.0")
+    implementation("dev.lyzev.api:kratos:1.1.0")
 }
 
 tasks.processResources {

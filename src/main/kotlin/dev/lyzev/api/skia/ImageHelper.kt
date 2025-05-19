@@ -16,16 +16,18 @@
  * You should have received a copy of the GNU General Public License along with Skija. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.lyzev.skija.util.skija
+package dev.lyzev.api.skia
 
 import com.mojang.blaze3d.systems.RenderSystem
-import dev.lyzev.skija.Skija
 import io.github.humbleui.skija.ColorType
 import io.github.humbleui.skija.DirectContext
 import io.github.humbleui.skija.Image
 import io.github.humbleui.skija.SurfaceOrigin
 import org.lwjgl.opengl.GL11
 
+/**
+ * A helper class for loading images.
+ */
 object ImageHelper {
 
     /**
@@ -36,42 +38,44 @@ object ImageHelper {
     /**
      * Gets the Minecraft scene as a Skija image.
      */
-    fun getMinecraftSceneAsSkijaImage(
+    operator fun get(
         context: DirectContext,
-        tex: Int,
+        textureId: Int,
         width: Int,
         height: Int,
-        origin: SurfaceOrigin = SurfaceOrigin.BOTTOM_LEFT,
-        alpha: Boolean = true
+        hasAlpha: Boolean = true,
+        origin: SurfaceOrigin = SurfaceOrigin.BOTTOM_LEFT
     ): Image {
-        RenderSystem.bindTexture(tex)
-        val img = textures.getOrPut(tex) {
-            Image.adoptGLTextureFrom(
-                context,
-                Skija.mc.framebuffer.colorAttachment,
-                GL11.GL_TEXTURE_2D,
-                width,
-                height,
-                GL11.GL_RGBA8,
-                origin,
-                if (alpha) ColorType.RGBA_8888
-                else ColorType.RGB_888X
-            )
+        require(width > 0 && height > 0) { "Width and height must be positive" }
+
+        RenderSystem.bindTexture(textureId)
+        return textures.getOrPut(textureId) {
+            create(context, textureId, width, height, origin, hasAlpha)
+        }.apply {
+            if (this.width != width || this.height != height) {
+                textures[textureId] = create(context, textureId, width, height, origin, hasAlpha)
+            }
         }
-        if (img.width != width || img.height != height) {
-            textures[tex] = Image.adoptGLTextureFrom(
-                context,
-                Skija.mc.framebuffer.colorAttachment,
-                GL11.GL_TEXTURE_2D,
-                width,
-                height,
-                GL11.GL_RGBA8,
-                origin,
-                if (alpha) ColorType.RGBA_8888
-                else ColorType.RGB_888X
-            )
-            return textures[tex]!!
-        }
-        return img
     }
+
+    /**
+     * Creates an image from the given texture.
+     */
+    private fun create(
+        context: DirectContext,
+        textureId: Int,
+        width: Int,
+        height: Int,
+        origin: SurfaceOrigin,
+        hasAlpha: Boolean
+    ) = Image.adoptGLTextureFrom(
+        context,
+        textureId,
+        GL11.GL_TEXTURE_2D,
+        width,
+        height,
+        GL11.GL_RGBA8,
+        origin,
+        if (hasAlpha) ColorType.RGBA_8888 else ColorType.RGB_888X
+    )
 }

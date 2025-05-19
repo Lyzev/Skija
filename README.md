@@ -24,6 +24,8 @@ To run the project, use the following Gradle tasks:
 
 This project is licensed under the AGPL-3.0 License. See the [LICENSE](LICENSE) file for details. 
 
+Note that this project includes OpenSans font file, which is licensed under [SIL OFL 1.1 License](https://github.com/googlefonts/opensans/blob/main/OFL.txt).
+
 ## Acknowledgements
 
 - [imgui-java](https://github.com/SpaiR/imgui-java) for inspiration and code references.

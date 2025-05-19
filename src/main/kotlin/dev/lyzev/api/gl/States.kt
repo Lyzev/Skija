@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along with Skija. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.lyzev.skija.util.gl.state
+package dev.lyzev.api.gl
 
 import org.lwjgl.opengl.GL30.*
 import java.util.*
@@ -29,7 +29,7 @@ object States {
     /**
      * The current OpenGL version.
      */
-    private val glVersion: Int;
+    private val glVersion: Int
 
     /**
      * The stack of OpenGL states.
@@ -40,20 +40,15 @@ object States {
      * Pushes the current OpenGL state onto the stack.
      */
     fun push() {
-        val currentState = State(glVersion)
-        currentState.push()
-        states += currentState
+        states += State(glVersion).push()
     }
 
     /**
      * Pops the last OpenGL state from the stack and restores it.
      */
     fun pop() {
-        if (states.isEmpty()) {
-            throw IllegalStateException("No state to restore.")
-        }
-        val state = states.pop()
-        state.pop()
+        require(states.isNotEmpty()) { "No state to restore." }
+        states.pop().pop()
     }
 
     /**
@@ -61,11 +56,6 @@ object States {
      *
      * This code was inspired by [imgui-java](https://github.com/SpaiR/imgui-java/blob/2a605f0d8500f27e13fa1d2b4cf8cadd822789f4/imgui-lwjgl3/src/main/java/imgui/gl3/ImGuiImplGl3.java#L250-L254)
      * and modified to fit the project's codebase.
-     *
-     * The original code was licensed under the MIT License. The original license is included in the root of this project
-     * under the file "LICENSE-IMGUI-JAVA".
-     *
-     * As part of this project, this code is now distributed under the AGPLv3 license.
      */
     init {
         val major = IntArray(1)
