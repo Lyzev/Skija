@@ -18,11 +18,10 @@
 
 package dev.lyzev.api.skia
 
-import com.mojang.blaze3d.systems.RenderSystem
 import dev.lyzev.api.event.*
 import dev.lyzev.api.gl.States
 import io.github.humbleui.skija.*
-import net.minecraft.client.MinecraftClient
+import org.lwjgl.opengl.GL11
 
 /**
  * The Skia implementation for Minecraft.
@@ -76,7 +75,7 @@ object SkiaImplMc : EventListener {
             height,
             0,
             8,
-            MinecraftClient.getInstance().framebuffer.fbo,
+            0,
             FramebufferFormat.GR_GL_RGBA8
         )
         surface = Surface.wrapBackendRenderTarget(
@@ -96,8 +95,8 @@ object SkiaImplMc : EventListener {
         if (context == null || surface == null) return
 
         States.push()
-        RenderSystem.disableCull()
-        RenderSystem.clearColor(0f, 0f, 0f, 0f)
+        GL11.glDisable(GL11.GL_CULL_FACE)
+        GL11.glClearColor(0f, 0f, 0f, 0f)
 
         // Use selective state resetting instead of resetGLAll()
         context?.resetGL(*states)

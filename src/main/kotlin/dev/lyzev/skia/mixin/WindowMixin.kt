@@ -17,8 +17,10 @@
  */
 package dev.lyzev.skia.mixin
 
+import dev.lyzev.api.event.EventSkiaDraw
 import dev.lyzev.api.event.EventSkiaInit
 import net.minecraft.client.util.Window
+import net.minecraft.client.util.tracy.TracyFrameCapturer
 import org.spongepowered.asm.mixin.Mixin
 import org.spongepowered.asm.mixin.injection.At
 import org.spongepowered.asm.mixin.injection.Inject
@@ -37,5 +39,10 @@ class WindowMixin {
     @Inject(method = ["onFramebufferSizeChanged"], at = [At("RETURN")])
     private fun onFramebufferSizeChanged(window: Long, width: Int, height: Int, ci: CallbackInfo) {
         EventSkiaInit(if (width > 0) width else 1, if (height > 0) height else 1).fire()
+    }
+
+    @Inject(method = ["swapBuffers"], at = [At("HEAD")])
+    private fun onSwapBuffers(capturer: TracyFrameCapturer, ci: CallbackInfo) {
+        EventSkiaDraw.fire()
     }
 }

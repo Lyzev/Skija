@@ -70,20 +70,33 @@ class State(private val glVersion: Int) {
                 lastEnablePrimitiveRestart = glIsEnabled(GL_PRIMITIVE_RESTART)
             }
 
-            // These states are not saved in the original imgui-java project but are included to address bugs encountered when drawing with Skija.
+            // This state is not saved in the original imgui-java project but is included to address bugs encountered when drawing with Skija.
             lastDepthMask = glGetBoolean(GL_DEPTH_WRITEMASK)
 
-            // Save and set pixel store states for Skia
             glGetIntegerv(GL_PIXEL_UNPACK_BUFFER_BINDING, lastPixelUnpackBufferBinding)
             glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0)
 
-            // Save all pixel store parameters that affect texture uploads
+            glGetIntegerv(GL_PACK_SWAP_BYTES, lastPackSwapBytes)
+            glGetIntegerv(GL_PACK_LSB_FIRST, lastPackLsbFirst)
+            glGetIntegerv(GL_PACK_ROW_LENGTH, lastPackRowLength)
+            glGetIntegerv(GL_PACK_SKIP_PIXELS, lastPackSkipPixels)
+            glGetIntegerv(GL_PACK_SKIP_ROWS, lastPackSkipRows)
+            glGetIntegerv(GL_PACK_ALIGNMENT, lastPackAlignment)
+
+            glGetIntegerv(GL_UNPACK_SWAP_BYTES, lastUnpackSwapBytes)
+            glGetIntegerv(GL_UNPACK_LSB_FIRST, lastUnpackLsbFirst)
             glGetIntegerv(GL_UNPACK_ALIGNMENT, lastUnpackAlignment)
             glGetIntegerv(GL_UNPACK_ROW_LENGTH, lastUnpackRowLength)
             glGetIntegerv(GL_UNPACK_SKIP_PIXELS, lastUnpackSkipPixels)
             glGetIntegerv(GL_UNPACK_SKIP_ROWS, lastUnpackSkipRows)
 
-            // Set pixel store parameters optimal for font texture uploads
+            if (glVersion >= 120) {
+                glGetIntegerv(GL_PACK_IMAGE_HEIGHT, lastPackImageHeight)
+                glGetIntegerv(GL_PACK_SKIP_IMAGES, lastPackSkipImages)
+                glGetIntegerv(GL_UNPACK_IMAGE_HEIGHT, lastUnpackImageHeight)
+                glGetIntegerv(GL_UNPACK_SKIP_IMAGES, lastUnpackSkipImages)
+            }
+
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
             glPixelStorei(GL_UNPACK_ROW_LENGTH, 0)
             glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0)
@@ -142,14 +155,29 @@ class State(private val glVersion: Int) {
                 lastScissorBox[3]
             )
 
-            // Restore pixel store states
+            glPixelStorei(GL_PACK_SWAP_BYTES, lastPackSwapBytes[0])
+            glPixelStorei(GL_PACK_LSB_FIRST, lastPackLsbFirst[0])
+            glPixelStorei(GL_PACK_ROW_LENGTH, lastPackRowLength[0])
+            glPixelStorei(GL_PACK_SKIP_PIXELS, lastPackSkipPixels[0])
+            glPixelStorei(GL_PACK_SKIP_ROWS, lastPackSkipRows[0])
+            glPixelStorei(GL_PACK_ALIGNMENT, lastPackAlignment[0])
+
             glBindBuffer(GL_PIXEL_UNPACK_BUFFER, lastPixelUnpackBufferBinding[0])
+            glPixelStorei(GL_UNPACK_SWAP_BYTES, lastUnpackSwapBytes[0])
+            glPixelStorei(GL_UNPACK_LSB_FIRST, lastUnpackLsbFirst[0])
             glPixelStorei(GL_UNPACK_ALIGNMENT, lastUnpackAlignment[0])
             glPixelStorei(GL_UNPACK_ROW_LENGTH, lastUnpackRowLength[0])
             glPixelStorei(GL_UNPACK_SKIP_PIXELS, lastUnpackSkipPixels[0])
             glPixelStorei(GL_UNPACK_SKIP_ROWS, lastUnpackSkipRows[0])
 
-            // These states are not restored in the original imgui-java project but are included to address bugs encountered when drawing with Skija.
+            if (glVersion >= 120) {
+                glPixelStorei(GL_PACK_IMAGE_HEIGHT, lastPackImageHeight[0])
+                glPixelStorei(GL_PACK_SKIP_IMAGES, lastPackSkipImages[0])
+                glPixelStorei(GL_UNPACK_IMAGE_HEIGHT, lastUnpackImageHeight[0])
+                glPixelStorei(GL_UNPACK_SKIP_IMAGES, lastUnpackSkipImages[0])
+            }
+
+            // This state is not restored in the original imgui-java project but is included to address bugs encountered when drawing with Skija.
             glDepthMask(lastDepthMask) // This is a workaround for a bug where the text renderer of Minecraft would not render text properly (flickering text). This also fixes the issue that resizing the window would cause the buttons and more to disappear.
         }
         return this

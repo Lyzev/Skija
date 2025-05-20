@@ -48,6 +48,18 @@ class Properties {
     val lastUnpackRowLength = IntArray(1)
     val lastUnpackSkipPixels = IntArray(1)
     val lastUnpackSkipRows = IntArray(1)
+    val lastPackSwapBytes = IntArray(1)
+    val lastPackLsbFirst = IntArray(1)
+    val lastPackRowLength = IntArray(1)
+    val lastPackImageHeight = IntArray(1)
+    val lastPackSkipPixels = IntArray(1)
+    val lastPackSkipRows = IntArray(1)
+    val lastPackSkipImages = IntArray(1)
+    val lastPackAlignment = IntArray(1)
+    val lastUnpackSwapBytes = IntArray(1)
+    val lastUnpackLsbFirst = IntArray(1)
+    val lastUnpackImageHeight = IntArray(1)
+    val lastUnpackSkipImages = IntArray(1)
 
     private val flags = BitSet(7)
 
@@ -82,7 +94,6 @@ class Properties {
             flags[5] = value
         }
 
-    // These properties are not used in the original imgui-java project.
     var lastDepthMask
         get() = flags[6]
         set(value) {

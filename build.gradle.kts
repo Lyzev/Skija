@@ -5,7 +5,7 @@ import org.gradle.internal.jvm.Jvm
 
 plugins {
     kotlin("jvm") version "2.1.0"
-    id("fabric-loom") version "1.9-SNAPSHOT"
+    id("fabric-loom") version "1.10-SNAPSHOT"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 

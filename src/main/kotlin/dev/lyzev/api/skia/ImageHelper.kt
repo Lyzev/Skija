@@ -18,7 +18,8 @@
 
 package dev.lyzev.api.skia
 
-import com.mojang.blaze3d.systems.RenderSystem
+import com.mojang.blaze3d.opengl.GlConst
+import com.mojang.blaze3d.opengl.GlStateManager
 import io.github.humbleui.skija.ColorType
 import io.github.humbleui.skija.DirectContext
 import io.github.humbleui.skija.Image
@@ -48,7 +49,7 @@ object ImageHelper {
     ): Image {
         require(width > 0 && height > 0) { "Width and height must be positive" }
 
-        RenderSystem.bindTexture(textureId)
+        GL11.glBindTexture(GlConst.GL_TEXTURE_2D, textureId)
         return textures.getOrPut(textureId) {
             create(context, textureId, width, height, origin, hasAlpha)
         }.apply {

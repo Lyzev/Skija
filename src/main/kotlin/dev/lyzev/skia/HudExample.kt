@@ -28,6 +28,7 @@ import dev.lyzev.api.skia.WrappedBackendRenderTarget
 import io.github.humbleui.skija.*
 import io.github.humbleui.types.Rect
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.texture.GlTexture
 
 object HudExample : EventListener {
 
@@ -69,7 +70,7 @@ object HudExample : EventListener {
     private fun draw(context: DirectContext, renderTarget: WrappedBackendRenderTarget, canvas: Canvas) {
         val textureImage = ImageHelper[
             context,
-            mc.framebuffer.colorAttachment,
+            (mc.framebuffer.colorAttachment as GlTexture).glId,
             mc.framebuffer.textureWidth,
             mc.framebuffer.textureHeight,
             false
